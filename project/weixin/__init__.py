@@ -1,3 +1,5 @@
+# coding:utf-8
+
 from project import weixin
 from project.models import Post
 
