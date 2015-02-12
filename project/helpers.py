@@ -37,10 +37,10 @@ def genAtom(filename):
     fg.id('http://www.bonfy.im/')
     fg.author({
         'name': 'BONFY',
-        'email': 'bonfygithub@163.com'
+        'email': 'foreverbonfy@163.com'
     })
 
-    posts = Post.query.order_by('id desc').limit(10)
+    posts = Post.query.order_by('insert_dt desc').limit(10)
 
     for post in posts:
         fe = fg.add_entry()
