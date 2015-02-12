@@ -1,0 +1,49 @@
+{% extends "base_blog.html" %}
+{% block content %}
+
+
+    <!-- All posts -->
+
+    <div class="main-post-list hidden">
+
+        <ol class="post-list">
+            {% for post in posts.items %}
+                <li>
+                    <h2 class="post-list__post-title post-title"><a href="{{ url_for('home.blog_detail',id=post.id) }}"
+                                                                    title="link to {{ post.title }}">{{ post.title }}</a>
+                    </h2>
+
+                    <p class="excerpt">{{ post.content_html[:500]|safe }}...</p>
+
+                    <div class="post-list__meta">
+                        <time datetime="{{ post.insert_dt }}"
+                              class="post-list__meta--date date">{{ post.insert_dt }}</time>
+                        &#8226; <span class="post-list__meta--tags tags">{{ post.tag.name }}</span><a
+                            class="btn-border-small" href="{{ url_for('home.blog_detail',id=post.id) }}">继续阅读</a></div>
+                    <hr class="post-list__divider"/>
+                </li>
+
+            {% endfor %}
+        </ol>
+
+
+        <hr class="post-list__divider "/>
+
+        <nav class="pagination" role="navigation">
+            {% if posts.has_prev %}
+                <a class="newer-posts pagination__newer btn btn-small btn-tertiary"
+                   href="{{ url_for('home.home', page = posts.prev_num) }}#blog">&larr; 最近</a>
+            {% endif %}
+
+                <span class="pagination__page-number"> Page : {{ posts.page }} of {{ posts.pages }}</span>
+
+            {% if posts.has_next %}
+                <a class="older-posts pagination__older btn btn-small btn-tertiary"
+                   href="{{ url_for('home.home', page = posts.next_num) }}#blog">更早 &rarr;</a>
+            {% endif %}
+        </nav>
+
+    </div>
+
+
+{% endblock %}

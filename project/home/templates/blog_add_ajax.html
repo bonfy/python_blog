@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <!--
+        <link rel="stylesheet" href="{{ url_for('static', filename='editor/editor.css') }}
+    -->
+    <link href="{{ url_for('static', filename='css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/editor/0.1.0/editor.css">
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-header">Add Post</h1>
+<div class="editor-wrapper">
+  <input class="title" type="text" placeholder="Title" />
+  <textarea id="editor" placeholder="Content here ...."></textarea>
+
+    <select id = 'tag'></select>
+
+   <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+   <input class="form-control form-textbox" id="date" name="insert_dt" readonly="true" size="16" type="text" value="2015-02-04">
+  <!--
+      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+  -->
+  <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+    </div>
+
+  <button id='post' class="btn btn-sm btn-success" type="submit">Post</button>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+
+<script src="{{ url_for('static', filename='editor/editor.js') }}"></script>
+<script src="{{ url_for('static', filename='editor/marked.js') }}"></script>
+<script charset="UTF-8" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+
+<script type="text/javascript">
+
+     $('.form_date').datetimepicker({
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: true,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+
+
+    $(function(){
+
+        var editor = new Editor();
+        editor.render();
+
+
+        $.ajax({
+            type: "GET",
+            url: "/json/list/tag",
+            //data: {content:$("#content").val()},
+            //dataType: "json",
+            success: function (data) {
+
+                var optionstring = "";
+                //console.log(data.result);
+                for(var item in data.result)
+                {
+                    //console.log(data.result[item].id);
+                    optionstring += "<option value=\""+ data.result[item].id +"\" >"+  data.result[item].name +"</option>";
+                }
+                $("#tag").html(optionstring);
+            }
+        });
+
+        $('#post').click(function(){
+
+            $.ajax({
+             type: "POST",
+             url: "/json/blog/add",
+             data: JSON.stringify({
+                 title:$(".title").val(),
+                 insert_dt:$("#date").val(),
+                 tag_id:$("#tag").val(),
+                 content:editor.codemirror.getValue()
+             }),
+             //data: {content:$("#content").val()},
+             //dataType: "json",
+             contentType: 'application/json',
+             success: function(data){
+                         alert(data.result);
+                      }
+         });
+
+        });
+    });
+
+
+</script>
+{% endblock %}

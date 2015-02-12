@@ -1,0 +1,34 @@
+{% extends "base_blog.html" %}
+{% block content %}
+
+<article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="{{ post.insert_dt }}" class="post-meta__date date">{{ post.insert_dt }}</time> &#8226; <span class="post-meta__tags tags">{{ post.tag.name }}</span>
+        <!--<span class="post-meta__author author"><img src="{{ post.author.name }}" alt="profile image for {{ post.author.name }}" class="avatar post-meta__avatar" /> by {{ post.author.name }}</span>-->
+      </div>
+      <h1 class="post-title">{{ post.title }}</h1>
+    </header>
+
+    <section class="">
+      {{ post.content_html|safe }}
+    </section>
+
+</article>
+
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        currentWidth = $('.panel-cover').width();
+            if (currentWidth < 960) {
+              $('.panel-cover').addClass('panel-cover--collapsed');
+              $('.content-wrapper').addClass('animated slideInRight');
+            } else {
+              $('.panel-cover').css({'max-width': '500px', 'width': '30%'});
+              //$('.panel-cover').animate({'max-width': '500px', 'width': '30%'}, 400, swing = 'swing', function() {} );
+            }
+    </script>
+{% endblock %}

@@ -1,0 +1,13 @@
+Mysql:
+创建数据库
+
+CREATE DATABASE `flask` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+SQL SERVER:
+中文能够输入  但是没法从flask-sqlalchemy 读取 问题有待解决
+
+RSS CDATA
+
+weixin 接口
+music panel
+Resume

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <title>BONFY HOME</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="嗨，我是BONFY">
+    <meta name="author" content="BONFY">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="BONFY HOME">
+    <meta name="twitter:description" content=嗨，我是BONFY">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="BONFY HOME">
+    <meta property="og:description" content="嗨，我是BONFY">
+
+    <link rel="icon" type="image/jpg" href="{{ url_for('static', filename='vno/images/favicon.jpg') }}"/>
+    <link href="{{ url_for('static', filename='vno/images/favicon.jpg') }}" rel="shortcut icon" type="image/jpg">
+    <!--
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    -->
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vno/css/vno.css') }}"/>
+    <link href="{{ url_for('static',filename='vno/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='vno/css/tomorrow.css') }}">
+
+    {% block css %}{% endblock %}
+</head>
+
+
+<body class="home-template no-js">
+<span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover panel-cover--collapse">
+    <div class="panel-main">
+
+        <div class="panel-main__inner panel-inverted">
+            <div class="panel-main__content">
+
+                 <a href="http://www.bonfy.im" title="下雨湿嗒嗒，感觉萌萌哒"><img src="{{ url_for('static', filename='vno/images/favicon.jpg') }}" width="80" class="panel-cover__logo logo" alt="下雨湿嗒嗒，感觉萌萌哒"/></a>
+
+                <h1 class="panel-cover__title panel-title"><a href="http://blog.bonfy.im"
+                                                              title="前往BONFY的主页">BONFY</a></h1>
+                <span class="panel-cover__subtitle panel-subtitle">善听不善言,善思不善断</span>
+                <hr class="panel-cover__divider"/>
+                <p class="panel-cover__description">嗨，我是BONFY</p>
+                <hr class="panel-cover__divider panel-cover__divider--secondary"/>
+
+                <div class="navigation-wrapper">
+                    <div>
+                        <nav class="cover-navigation cover-navigation--primary">
+                            <ul class="navigation">
+                                <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a>
+                                </li>
+                                <li class="navigation__item"><a href="http://project.onevcat.com" target="_blank"
+                                                                title="我的项目">项目</a></li>
+                                <li class="navigation__item"><a href="http://about.onevcat.com/" title="了解更多关于我">关于</a>
+                                </li>
+                                <li class="navigation__item"><a href="http://eepurl.com/" title="邮件订阅本站">订阅</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div>
+                        <!--social-->
+                        <nav class="cover-navigation navigation--social">
+                            <ul class="navigation">
+
+
+                                <!-- Weibo -->
+                                <li class="navigation__item">
+                                    <a href="http://weibo.com/foreverbonfy" title="@onevcat 的微博" target="_blank">
+                                        <i class='social fa fa-weibo'></i>
+                                        <span class="label">Weibo</span>
+                                    </a>
+                                </li>
+
+                                <!-- Github -->
+                                <li class="navigation__item">
+                                    <a href="https://github.com/bonfy" title="@onevcat 的 Github" target="_blank">
+                                        <i class='social fa fa-github'></i>
+                                        <span class="label">Github</span>
+                                    </a>
+                                </li>
+
+                                <!-- Twitter -->
+                                <li class="navigation__item">
+                                    <a href="http://twitter.com/bonfy" title="@onevcat" target="_blank">
+                                        <i class='social fa fa-twitter'></i>
+                                        <span class="label">Twitter</span>
+                                    </a>
+                                </li>
+
+                                <!-- RSS -->
+                                <li class="navigation__item">
+                                    <a href="http://blog.bonfy.im/rss/" rel="author" title="RSS" target="_blank">
+                                        <i class='social fa fa-rss'></i>
+                                        <span class="label">RSS</span>
+                                    </a>
+                                </li>
+
+                                <!-- Email -->
+                                <li class="navigation__item">
+                                    <a href="mailto:foreverbonfy@163.com" title="邮件联系我">
+                                        <i class='social fa fa-envelope'></i>
+                                        <span class="label">Email</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </nav>
+                        <!--social end-->
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- 滤镜 -->
+        <div class="panel-cover--overlay cover-blue"></div>
+    </div>
+</header>
+
+<div class="content-wrapper">
+    <div class="content-wrapper__inner">
+        {% block content %}{% endblock %}
+
+        <footer class="footer">
+            <span class="footer__copyright"><span>Powered by BONFY</span> <span>&copy; 2015  All rights reserved.</span> </span>
+            <span class="footer__copyright">Driven by Flask on Digital Ocean Theme by <a href="https://github.com/onevcat/vno">Vno</a></span>
+        </footer>
+    </div>
+</div>
+
+
+
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='vno/js/main.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='vno/js/highlight.pack.js') }}"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+{% block js %}{% endblock %}
+</body>
+</html>

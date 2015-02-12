@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block css %}
+    <link href="{{ url_for('static', filename='css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+
+<h1 class="page-header">Add Post</h1>
+
+<form class="form-message" role="form" method="post" action="/blog/add">
+
+  {{ form.csrf_token }}
+  <div class="form-group">
+  <label for="title" class="col-md-2 control-label">Title</label>
+    {{ form.title(placeholder="title", class_="form-control form-textbox") }}
+    <span class="error">
+      {% if form.title.errors %}
+        {% for error in form.title.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </div>
+
+  <div class="form-group">
+  <label for="content" class="col-md-2 control-label">Content</label>
+  {{ form.content(id = "content", placeholder="content", class_="form-control form-textarea", rows = "8") }}
+    <span class="error">
+      {% if form.content.errors %}
+        {% for error in form.content.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </div>
+
+<div class="form-group">
+  <label for="tag" class="col-md-2 control-label">Tag</label>
+  {{ form.tag_id(id = "tag") }}
+    <span class="error">
+      {% if form.tag_id.errors %}
+        {% for error in form.tag_id.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </div>
+
+<div class="form-group">
+  <label for="dtp_input2" class="col-md-2 control-label">Date</label>
+  <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+   {{ form.insert_dt(id='date', class_="form-control form-textbox",size="16",type="text",readonly="true") }}
+  <!--
+      <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+  -->
+  <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+</div>
+</div>
+
+    <span class="error">
+      {% if form.insert_dt.errors %}
+        {% for error in form.insert_dt.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  <button class="btn btn-sm btn-success" type="submit">Post</button>
+</form>
+
+    <div id = "content-display">
+
+    </div>
+
+{% endblock %}
+
+{% block js %}
+<script charset="UTF-8" src="{{ url_for('static', filename='js/bootstrap-datetimepicker.min.js') }}"></script>
+
+<script type="text/javascript">
+
+   $('.form_date').datetimepicker({
+        format: 'yyyy-mm-dd',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: true,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+    });
+
+    $(function(){
+        $('#content').change(function(){
+            $.ajax({
+             type: "POST",
+             url: "/json/web/content",
+             data: JSON.stringify({content:$("#content").val()}),
+             //data: {content:$("#content").val()},
+             //dataType: "json",
+             contentType: 'application/json',
+             success: function(data){
+                         $('#content-display').empty();
+                         var html = data.result;
+                         $('#content-display').html(html);
+                      }
+         });
+        });
+    });
+
+</script>
+{% endblock %}
