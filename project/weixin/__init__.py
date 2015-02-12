@@ -2,7 +2,7 @@
 
 from project import weixin
 from project.models import Post
-
+import random
 
 songs = [
     {
