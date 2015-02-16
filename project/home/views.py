@@ -13,9 +13,9 @@ from flask import render_template, Blueprint, \
 from flask.ext.login import login_required, current_user
 from config import PAGE_SIZE
 
-from .forms import MessageForm
+from .forms import MessageForm, TodoForm
 from project import db
-from project.models import Post, Tag
+from project.models import Post, Tag, TodoList
 from project.helpers import genAtom
 
 import mistune
@@ -43,7 +43,7 @@ def home(page=1):
 
     # posts = db.session.query(Post).all()
 
-    posts = Post.query.order_by('insert_dt desc').paginate(page, PAGE_SIZE, False)
+    posts = Post.query.order_by('id desc').paginate(page, PAGE_SIZE, False)
 
     # print posts[5].content_html
     return render_template(
@@ -101,6 +101,35 @@ def blog_detail(id):
 def blog_add_ajax():
     return render_template('blog_add_ajax.html')
 
+
+@home_blueprint.route('/todo/add', methods=['GET', 'POST'])
+@login_required
+def todo_add():
+    error = None
+    form = TodoForm(request.form)
+
+    if form.validate_on_submit():
+
+        new_todo = TodoList(
+            form.title.data
+        )
+        db.session.add(new_todo)
+        db.session.commit()
+
+        flash('New todo was successfully added. Thanks.')
+        return redirect(url_for('home.todo_list'))
+    else:
+        return render_template(
+            'todo_add.html', form=form, error=error)
+
+
+@home_blueprint.route('/todo/list')
+@login_required
+def todo_list():
+    error = None
+    todos = TodoList.query.order_by('id desc').all()
+    return render_template(
+        'todo_list.html', todos=todos, error=error)
 
 #########
 #   Json From Here

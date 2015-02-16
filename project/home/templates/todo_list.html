@@ -1,0 +1,15 @@
+
+
+<!-- All todos -->
+
+
+
+<ol class="post-list">
+    {% for todo in todos %}
+        <li>
+           {{ todo.title }}  - Post in {{ todo.insert_dt }}
+        </li>
+
+    {% endfor %}
+</ol>
+

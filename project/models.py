@@ -99,3 +99,23 @@ class Song(db.Model):
         self.name = name
         self.url = url
 
+
+class TodoList(db.Model):
+
+    __tablename__ = 'todolist'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+
+    # 0 for 未完成， 1 for 完成
+    flag = db.Column(db.Integer, default=0)
+    insert_dt = db.Column(db.DateTime, default=str(datetime.utcnow())[:-7])
+    finish_dt = db.Column(db.DateTime)
+
+
+    def __init__(self, title):
+        self.title = title
+
+    def setFinished(self):
+        self.flag = 1
+        self.finish_dt = str(datetime.utcnow())[:-7]

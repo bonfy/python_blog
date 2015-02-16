@@ -9,3 +9,7 @@ class MessageForm(Form):
     content = TextAreaField('Description', validators=[DataRequired()])
     tag_id = SelectField('Tag', coerce=int)
     insert_dt = DateField('Date', default=datetime.now(), validators=[optional()])
+
+
+class TodoForm(Form):
+    title = TextField('Title', validators=[DataRequired()])

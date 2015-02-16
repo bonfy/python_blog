@@ -2,11 +2,6 @@
 
 __author__ = 'ChenKai'
 
-
-# project 引用问题解决
-import sys
-sys.path.insert(0, '..')
-
 from feedgen.feed import FeedGenerator
 
 from project.models import Post
@@ -16,7 +11,7 @@ import pytz
 from datetime import datetime
 import time
 
-filename = 'project/static/rss/atom.xml'
+filename = 'static/rss/atom.xml'
 
 
 def CDATA(str):
@@ -37,10 +32,10 @@ def genAtom(filename):
     fg.id('http://www.bonfy.im/')
     fg.author({
         'name': 'BONFY',
-        'email': 'foreverbonfy@163.com'
+        'email': 'bonfygithub@163.com'
     })
 
-    posts = Post.query.order_by('insert_dt desc').limit(10)
+    posts = Post.query.order_by('id desc').limit(10)
 
     for post in posts:
         fe = fg.add_entry()
@@ -62,28 +57,25 @@ def genAtom(filename):
 # 需要将所有的.md file 放进 static/md 文件夹中
 def initMd(filePath):
     for file_name in os.listdir(filePath):
-        if file_name[-2:]== 'md':
-            with open(os.path.join(filePath, file_name), 'r') as f:
-                lines = f.readlines()
+        with open(os.path.join(filePath, file_name), 'r') as f:
+            lines = f.readlines()
 
-                title = str(lines[0]).strip()[len('title: '):]
-                print title
-                user_id = 1
-                insert_date = datetime.strptime(str(lines[1]).strip()[len('date: '):].replace('/', '-'), "%Y-%m-%d %H:%M:%S")
-                # tag_id = 1   # tag_id 默认为1 随便说说
-                content = ''.join(lines[3:])
+            title = str(lines[0]).strip()[len('title: '):]
+            user_id = 1
+            insert_date = datetime.strptime(str(lines[1]).strip()[len('date: '):].replace('/', '-'), "%Y-%m-%d %H:%M:%S")
+            # tag_id = 1   # tag_id 默认为1 随便说说
+            content = ''.join(lines[3:])
 
-                new_message = Post(
-                    title,
-                    content,
-                    user_id,
-                    insert_dt=insert_date
-                )
-                db.session.add(new_message)
-                db.session.commit()
-            
+            new_message = Post(
+                title,
+                content,
+                user_id,
+                insert_dt=insert_date
+            )
+            db.session.add(new_message)
+            db.session.commit()
 
 
 if __name__ == '__main__':
     # genAtom()
-    initMd('project/static/md')
+    initMd('static/md')
