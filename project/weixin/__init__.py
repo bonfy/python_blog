@@ -1,3 +1,4 @@
+# coding:utf-8
 from project import weixin
 from project.models import Post
 import random
@@ -62,7 +63,7 @@ def reply_all(**kwargs):
         )
     elif content == 'N':
 
-        posts = Post.query.order_by('id desc').limit(5)
+        posts = Post.query.order_by('insert_dt desc').limit(5)
         articles = [{
                     'title': post.title,
                     'description': post.title,
