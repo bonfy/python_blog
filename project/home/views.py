@@ -43,7 +43,7 @@ def home(page=1):
 
     # posts = db.session.query(Post).all()
 
-    posts = Post.query.order_by('id desc').paginate(page, PAGE_SIZE, False)
+    posts = Post.query.order_by('insert_dt desc').paginate(page, PAGE_SIZE, False)
 
     # print posts[5].content_html
     return render_template(
